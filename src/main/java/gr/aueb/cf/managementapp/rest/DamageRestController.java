@@ -10,6 +10,7 @@ import gr.aueb.cf.managementapp.dto.*;
 import gr.aueb.cf.managementapp.model.Damage;
 import gr.aueb.cf.managementapp.service.IDamageService;
 
+import gr.aueb.cf.managementapp.service.ITechnicianService;
 import gr.aueb.cf.managementapp.validator.ValidatorUtil;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.RequestScoped;
@@ -29,10 +30,12 @@ public class DamageRestController {
 
 
     private final IDamageService damageService;
+    private final ITechnicianService technicianService;
 
     @Inject
-    public DamageRestController(IDamageService damageService) {
+    public DamageRestController(IDamageService damageService, ITechnicianService technicianService) {
         this.damageService = damageService;
+        this.technicianService = technicianService;
     }
 
     @GET
@@ -46,6 +49,8 @@ public class DamageRestController {
             return Response.status(Response.Status.OK).entity(securityContext.getUserPrincipal()).build();
         }
     }
+
+
 
 
     @POST
@@ -65,10 +70,10 @@ public class DamageRestController {
     }
 
     @PUT
-    @Path("")
+    @Path("{propertyId}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response updateDamage(DamageUpdateDTO damageUpdateDTO, @Context UriInfo uriInfo) throws EntityInvalidArgumentException, EntityNotFoundException {
+    public Response updateDamage(@PathParam("propertyId") Long propertyId, DamageUpdateDTO damageUpdateDTO, @Context UriInfo uriInfo) throws EntityInvalidArgumentException, EntityNotFoundException {
         List<String> errors = ValidatorUtil.validateDTO(damageUpdateDTO);
         if (!errors.isEmpty()) {
             throw new EntityInvalidArgumentException("Property", String.join("\n", errors));
@@ -88,6 +93,17 @@ public class DamageRestController {
         criteria.put("id", damageId);
         DamageReadOnlyDTO damageReadOnlyDTO = damageService.getDamagesByCriteria(criteria).get(0);
         damageService.remove(propertyId, damageId);
+
+        return Response.status(Response.Status.OK).entity(damageReadOnlyDTO).build();
+    }
+
+    @GET
+    @Path("/{propertyId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getDamagesPerProperty(@PathParam("propertyId") Long propertyId, @PathParam("propertyId") Long damageId) throws  EntityNotFoundException {
+        Map<String, Object> criteria = new HashMap<>();
+        criteria.put("propertyId", propertyId);
+        List<DamageReadOnlyDTO> damageReadOnlyDTO = damageService.getDamagesByCriteria(criteria);
 
         return Response.status(Response.Status.OK).entity(damageReadOnlyDTO).build();
     }

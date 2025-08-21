@@ -19,7 +19,7 @@ import java.util.function.Function;
 public class JwtService {
 
     private String secretKey = "";
-    private long jwtExpiration = 10800000;
+    private long jwtExpiration = 1080000000;
 
     public String generateToken(String username, String role) {
         var claims = new HashMap<String, Object>();

@@ -5,6 +5,7 @@ import gr.aueb.cf.managementapp.core.exceptions.EntityInvalidArgumentException;
 import gr.aueb.cf.managementapp.core.exceptions.EntityNotFoundException;
 import gr.aueb.cf.managementapp.dao.ITechnicianDAO;
 import gr.aueb.cf.managementapp.dto.*;
+import gr.aueb.cf.managementapp.model.Damage;
 import gr.aueb.cf.managementapp.service.IDamageService;
 import gr.aueb.cf.managementapp.service.ITechnicianService;
 import gr.aueb.cf.managementapp.validator.ValidatorUtil;
@@ -27,10 +28,12 @@ import java.util.Map;
 public class TechnicianRestController {
 
     private final ITechnicianService technicianService;
+    private final IDamageService damageService;
 
     @Inject
-    public TechnicianRestController(ITechnicianService technicianService) {
+    public TechnicianRestController(ITechnicianService technicianService, IDamageService damageService) {
         this.technicianService = technicianService;
+        this.damageService = damageService;
     }
 
     @GET
@@ -41,6 +44,24 @@ public class TechnicianRestController {
         return Response.status(Response.Status.OK).entity(technicianReadOnlyDTOS).build();
     }
 
+    @GET
+    @Path("{/technicianId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getTechnicianById(@PathParam("technicianId") Long techId) {
+        Map<String, Object> criteria = new HashMap<>();
+        criteria.put("damage.id", techId);
+        TechnicianReadOnlyDTO technicianReadOnlyDTO = technicianService.getTechniciansByCriteria(criteria).get(0);
+        return Response.status(Response.Status.OK).entity(technicianReadOnlyDTO).build();
+    }
+
+    @GET
+    @Path("{/damageId}/technician")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getTechByDamageId(@PathParam("damageId") Long damageId) throws EntityNotFoundException {
+       TechnicianReadOnlyDTO technicianReadOnlyDTO =  technicianService.getTechByDamageId(damageId);
+       return Response.status(Response.Status.OK).entity(technicianReadOnlyDTO).build();
+
+    }
     @POST
     @Path("")
     @Produces(MediaType.APPLICATION_JSON)

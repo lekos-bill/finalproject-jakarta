@@ -28,21 +28,21 @@ public class OwnerRestController {
         this.ownerService = ownerService;
     }
 
-    @GET
-    @Path("/{propertyId}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getOwnersByProperty(@PathParam("propertyId") Long propertyId, @Context SecurityContext securityContext) {
-
-        System.out.println(securityContext.getUserPrincipal());
-        if (securityContext.isUserInRole("OWNER")) {
-            Map<String, Object> map = new HashMap<>();
-            map.put("property.id", propertyId);
-            List<OwnerReadOnlyDTO> owners = ownerService.getOwnersByCriteria(map);
-            return Response.status(Response.Status.OK).entity(owners).build();
-        } else {
-            return Response.status(Response.Status.OK).entity("No").build();
-        }
-    }
+//    @GET
+//    @Path("/{propertyId}")
+//    @Produces(MediaType.APPLICATION_JSON)
+//    public Response getOwnersByProperty(@PathParam("propertyId") Long propertyId, @Context SecurityContext securityContext) {
+//
+//        System.out.println(securityContext.getUserPrincipal());
+//        if (securityContext.isUserInRole("OWNER")) {
+//            Map<String, Object> map = new HashMap<>();
+//            map.put("property.id", propertyId);
+//            List<OwnerReadOnlyDTO> owners = ownerService.getOwnersByCriteria(map);
+//            return Response.status(Response.Status.OK).entity(owners).build();
+//        } else {
+//            return Response.status(Response.Status.OK).entity("No").build();
+//        }
+//    }
 
     @POST
     @Path("{propertyId}")

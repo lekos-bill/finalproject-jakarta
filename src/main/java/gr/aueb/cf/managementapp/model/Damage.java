@@ -38,13 +38,13 @@ public class Damage extends AbstractChange implements IdentifiableEntity{
     @Column(name = "change_type")
     private ChangeType changeType;
 
-//    public Damage(Long id, String description, LocalDate dateStarted, LocalDate dateEnded, LocalDate dateHappened, Long costForWork, Long costForMaterials, Property property, ChangeType changeType) {
-//        super(description, dateStarted, dateEnded, costForWork, costForMaterials);
-//        this.dateHappened = dateHappened;
-//        this.property = property;
-//        this.changeType = changeType;
-//        this.id = id;
-//    }
+    public Damage(Long id, String description, LocalDate dateStarted, LocalDate dateEnded, LocalDate dateHappened, Long costForWork, Long costForMaterials, Property property, ChangeType changeType) {
+        super(description, dateStarted, dateEnded, costForWork, costForMaterials);
+        this.dateHappened = dateHappened;
+        this.property = property;
+        this.changeType = changeType;
+        this.id = id;
+    }
 
     public Damage(Long id, String description, LocalDate dateStarted, LocalDate dateEnded, LocalDate dateHappened, Long costForWork, Long costForMaterials, ChangeType changeType) {
         super(description, dateStarted, dateEnded, costForWork, costForMaterials);
@@ -52,5 +52,6 @@ public class Damage extends AbstractChange implements IdentifiableEntity{
         this.changeType = changeType;
         this.id = id;
     }
+
 
 }

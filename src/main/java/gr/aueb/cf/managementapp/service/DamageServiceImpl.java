@@ -85,6 +85,8 @@ public class DamageServiceImpl implements IDamageService {
         }
     }
 
+
+
     public void remove(Long propertyId, Long damageId) throws EntityNotFoundException {
         try {
             JPAHelper.beginTransaction();

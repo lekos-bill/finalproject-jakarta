@@ -27,13 +27,13 @@ public class Renovation extends AbstractChange implements IdentifiableEntity{
     @JoinColumn(name = "technician_id")
     private Technician technician;
 
-//    public Renovation(Long id, String description, LocalDate dateStarted, LocalDate dateEnded, Long costForWork, Long costForMaterials, Property property, ChangeType changeType) {
-//        super(description, dateStarted, dateEnded, costForWork, costForMaterials);
-//
-//        this.property = property;
-//        this.changeType = changeType;
-//        this.id = id;
-//    }
+    public Renovation(Long id, String description, LocalDate dateStarted, LocalDate dateEnded, Long costForWork, Long costForMaterials, Property property, ChangeType changeType) {
+        super(description, dateStarted, dateEnded, costForWork, costForMaterials);
+
+        this.property = property;
+        this.changeType = changeType;
+        this.id = id;
+    }
 
     public Renovation(Long id, String description, LocalDate dateStarted, LocalDate dateEnded, Long costForWork, Long costForMaterials, ChangeType changeType) {
         super(description, dateStarted, dateEnded, costForWork, costForMaterials);

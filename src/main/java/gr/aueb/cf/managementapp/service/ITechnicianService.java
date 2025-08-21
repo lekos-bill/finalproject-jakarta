@@ -33,4 +33,6 @@ public interface ITechnicianService {
             EntityNotFoundException;
 
     TechnicianReadOnlyDTO insertTechnicianToDamage(Long technicianId, Long damageId) throws EntityAlreadyExistsException, EntityInvalidArgumentException;
+
+    TechnicianReadOnlyDTO getTechByDamageId(Long damageId) throws  EntityNotFoundException;
 }

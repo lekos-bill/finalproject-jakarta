@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 
 @Provider
-@Priority(Priorities.AUTHENTICATION)
+@Priority(Priorities.AUTHORIZATION)
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
 public class JwtAuthenticationFilter implements ContainerRequestFilter {
 
@@ -37,6 +37,7 @@ public class JwtAuthenticationFilter implements ContainerRequestFilter {
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
 
+        System.out.println("authentication filter");
         UriInfo uriInfo = requestContext.getUriInfo();
 
 

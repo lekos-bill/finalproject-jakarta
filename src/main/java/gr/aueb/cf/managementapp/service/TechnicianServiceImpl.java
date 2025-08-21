@@ -56,6 +56,22 @@ public class TechnicianServiceImpl implements ITechnicianService{
             JPAHelper.closeEntityManager();
         }
     }
+    public TechnicianReadOnlyDTO getTechByDamageId(Long damageId) throws  EntityNotFoundException {
+
+            try {
+                JPAHelper.beginTransaction();
+                Damage damage = damageDAO.getById(damageId).get();
+                TechnicianReadOnlyDTO technicianReadOnlyDTO = technicianDAO.getById(damage.getTechnician().getId()).map(Mapper::mapTechnicianToTechnicianReadOnlyDTO).orElseThrow(() ->new EntityNotFoundException("Technician", "Technician not found"));
+                JPAHelper.commitTransaction();
+                return technicianReadOnlyDTO;
+            } catch (EntityNotFoundException e) {
+                JPAHelper.rollbackTransaction();
+                LOGGER.error("Technician not found ", e.getCause());
+                throw e;
+            } finally {
+                JPAHelper.closeEntityManager();
+            }
+    }
 
     @Override
     public TechnicianReadOnlyDTO updateTechnician(TechnicianUpdateDTO updateDTO) throws EntityInvalidArgumentException, EntityNotFoundException {

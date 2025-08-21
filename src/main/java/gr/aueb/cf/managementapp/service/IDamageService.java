@@ -6,6 +6,7 @@ import gr.aueb.cf.managementapp.core.exceptions.EntityNotFoundException;
 import gr.aueb.cf.managementapp.dto.DamageInsertDTO;
 import gr.aueb.cf.managementapp.dto.DamageReadOnlyDTO;
 import gr.aueb.cf.managementapp.dto.DamageUpdateDTO;
+import gr.aueb.cf.managementapp.dto.TechnicianReadOnlyDTO;
 
 import java.util.List;
 import java.util.Map;
@@ -25,4 +26,6 @@ public interface IDamageService {
     List<DamageReadOnlyDTO> getAllDamages();
 
     List<DamageReadOnlyDTO> getDamagesByCriteria(Map<String, Object> criteria);
+
+
 }
