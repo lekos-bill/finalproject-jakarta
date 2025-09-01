@@ -11,7 +11,7 @@
 
         <init-param>
             <param-name>allowedOrigins</param-name>
-            <param-value>http://localhost:5173</param-value>
+            <param-value></param-value>
         </init-param>
         <init-param>
             <param-name>allowedMethods</param-name>
